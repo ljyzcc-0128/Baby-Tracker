@@ -163,6 +163,25 @@
   color: $color-text-white;
 }
 
+.milkRow {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: $spacing-xs;
+}
+
+.milkValue {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.2;
+}
+
+.milkUnit {
+  font-size: $font-size-md;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-left: 8rpx;
+}
+
 .empty {
   display: flex;
   flex-direction: column;

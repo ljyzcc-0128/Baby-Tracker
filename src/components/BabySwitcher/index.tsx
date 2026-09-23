@@ -6,6 +6,7 @@ import { View, Text, ScrollView } from '@tarojs/components';
 import classnames from 'classnames';
 import { useStore } from '@/store/useStore';
 import { formatAge } from '@/utils/time';
+import BabyAvatar from '@/components/BabyAvatar';
 import styles from './index.module.scss';
 
 const BabySwitcher: React.FC = () => {
@@ -27,14 +28,7 @@ const BabySwitcher: React.FC = () => {
         className={styles.current}
         onClick={() => babies.length > 1 && setExpanded(!expanded)}
       >
-        <View
-          className={styles.avatar}
-          style={{ backgroundColor: current?.avatarColor || '#ff8c5a' }}
-        >
-          <Text className={styles.avatarText}>
-            {current?.name?.slice(0, 1) || '宝'}
-          </Text>
-        </View>
+        <BabyAvatar baby={current} size={88} />
         <View className={styles.info}>
           <Text className={styles.name}>{current?.name || '未选择'}</Text>
           <Text className={styles.age}>
@@ -59,14 +53,7 @@ const BabySwitcher: React.FC = () => {
               )}
               onClick={() => handleSelect(baby.id)}
             >
-              <View
-                className={styles.avatarSmall}
-                style={{ backgroundColor: baby.avatarColor }}
-              >
-                <Text className={styles.avatarTextSmall}>
-                  {baby.name.slice(0, 1)}
-                </Text>
-              </View>
+              <BabyAvatar baby={baby} size={64} />
               <View className={styles.itemInfo}>
                 <Text className={styles.itemName}>{baby.name}</Text>
                 <Text className={styles.itemAge}>{formatAge(baby.birthDate)}</Text>

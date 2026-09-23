@@ -34,6 +34,48 @@
   margin-bottom: $spacing-md;
 }
 
+// ===== 头像上传 =====
+.avatarField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.avatarPreview {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: $radius-round;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatarInitial {
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  line-height: 1.2;
+}
+
+.avatarPlus {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 4rpx;
+}
+
+.avatarAction {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  margin-top: 8rpx;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
 .field {
   margin-bottom: $spacing-md;
 }

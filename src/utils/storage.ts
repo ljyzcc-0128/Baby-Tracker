@@ -8,7 +8,9 @@ export const STORAGE_KEYS = {
   CURRENT_BABY_ID: 'bt_current_baby_id',
   RECORDS: 'bt_records',
   DARK: 'bt_dark',
-  GROWTH: 'bt_growth'
+  GROWTH: 'bt_growth',
+  VACCINE: 'bt_vaccine',
+  SETTINGS: 'bt_settings'
 } as const;
 
 export function getStorage<T>(key: string, fallback: T): T {

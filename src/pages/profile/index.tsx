@@ -2,12 +2,13 @@
 // 宝宝管理页：多宝宝切换 / 新增 / 编辑 / 删除
 // ============================================
 import React, { useState } from 'react';
-import { View, Text, Button, Switch } from '@tarojs/components';
+import { View, Text, Button, Switch, Input } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import { useStore } from '@/store/useStore';
 import type { Baby } from '@/types';
 import BabyEditDialog from '@/components/BabyEditDialog';
+import BabyAvatar from '@/components/BabyAvatar';
 import { formatAge } from '@/utils/time';
 import styles from './index.module.scss';
 
@@ -20,6 +21,8 @@ const ProfilePage: React.FC = () => {
   const switchBaby = useStore((s) => s.switchBaby);
   const records = useStore((s) => s.records);
   const dark = useStore((s) => s.dark);
+  const settings = useStore((s) => s.settings);
+  const updateSettings = useStore((s) => s.updateSettings);
   const toggleDark = useStore((s) => s.toggleDark);
 
   const [editVisible, setEditVisible] = useState(false);
@@ -40,6 +43,7 @@ const ProfilePage: React.FC = () => {
     gender: 'male' | 'female';
     birthDate: string;
     avatarColor: string;
+    avatar?: string;
   }) => {
     if (editingBaby) {
       updateBaby(editingBaby.id, data);
@@ -107,12 +111,7 @@ const ProfilePage: React.FC = () => {
               )}
               onClick={() => handleSelectBaby(baby)}
             >
-              <View
-                className={styles.avatar}
-                style={{ backgroundColor: baby.avatarColor }}
-              >
-                <Text className={styles.avatarText}>{baby.name.slice(0, 1)}</Text>
-              </View>
+              <BabyAvatar baby={baby} size={96} />
               <View className={styles.babyInfo}>
                 <View className={styles.babyName}>
                   <Text>{baby.name}</Text>
@@ -166,6 +165,19 @@ const ProfilePage: React.FC = () => {
           </View>
           <Text className={styles.entryArrow}>›</Text>
         </View>
+        <View
+          className={classnames(styles.settingRow, styles.entryRow)}
+          onClick={() => Taro.navigateTo({ url: '/pages/vaccine/index' })}
+        >
+          <Text className={styles.settingIcon}>💉</Text>
+          <View className={styles.settingInfo}>
+            <Text className={styles.settingLabel}>疫苗接种</Text>
+            <Text className={styles.settingDesc}>
+              国家免疫规划时间表，自动计算各针次时间
+            </Text>
+          </View>
+          <Text className={styles.entryArrow}>›</Text>
+        </View>
         <View className={styles.settingRow}>
           <Text className={styles.settingIcon}>🌙</Text>
           <View className={styles.settingInfo}>
@@ -177,6 +189,57 @@ const ProfilePage: React.FC = () => {
             color="#ff8c5a"
             onChange={toggleDark}
           />
+        </View>
+        <View className={classnames(styles.settingRow, styles.setGap)}>
+          <Text className={styles.settingIcon}>🧷</Text>
+          <View className={styles.settingInfo}>
+            <Text className={styles.settingLabel}>尿不湿库存（片）</Text>
+            <Text className={styles.settingDesc}>记录换尿布自动减 1，低于阈值首页提醒</Text>
+          </View>
+          <Input
+            className={styles.numInput}
+            type='number'
+            value={String(settings.diaperStock)}
+            onInput={(e) => {
+              const n = parseInt(e.detail.value, 10);
+              updateSettings({ diaperStock: isNaN(n) || n < 0 ? 0 : n });
+            }}
+          />
+          <Text className={styles.inputUnit}>片</Text>
+        </View>
+        <View className={classnames(styles.settingRow, styles.setGap)}>
+          <Text className={styles.settingIcon}>⚠️</Text>
+          <View className={styles.settingInfo}>
+            <Text className={styles.settingLabel}>补货提醒阈值（片）</Text>
+            <Text className={styles.settingDesc}>库存不多于此数时提醒买尿不湿</Text>
+          </View>
+          <Input
+            className={styles.numInput}
+            type='number'
+            value={String(settings.diaperStockThreshold)}
+            onInput={(e) => {
+              const n = parseInt(e.detail.value, 10);
+              updateSettings({ diaperStockThreshold: isNaN(n) || n < 0 ? 0 : n });
+            }}
+          />
+          <Text className={styles.inputUnit}>片</Text>
+        </View>
+        <View className={classnames(styles.settingRow, styles.setGap)}>
+          <Text className={styles.settingIcon}>🤱</Text>
+          <View className={styles.settingInfo}>
+            <Text className={styles.settingLabel}>亲喂折算系数</Text>
+            <Text className={styles.settingDesc}>统计总奶量时每分钟母乳折算的毫升数</Text>
+          </View>
+          <Input
+            className={styles.numInput}
+            type='digit'
+            value={String(settings.milkCoef)}
+            onInput={(e) => {
+              const n = parseFloat(e.detail.value);
+              updateSettings({ milkCoef: isNaN(n) || n <= 0 ? 10 : n });
+            }}
+          />
+          <Text className={styles.inputUnit}>ml/分</Text>
         </View>
       </View>
 

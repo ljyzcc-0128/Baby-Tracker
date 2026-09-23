@@ -82,6 +82,19 @@
   border-radius: $radius-round;
 }
 
+.handoverBtn {
+  margin-left: auto;
+  font-size: $font-size-sm;
+  color: $color-primary;
+  background: var(--bt-hover, $color-bg-hover);
+  padding: 8rpx 24rpx;
+  border-radius: $radius-round;
+
+  &:active {
+    opacity: 0.75;
+  }
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;

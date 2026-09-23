@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import classnames from 'classnames';
 import { useStore } from '@/store/useStore';
 import { RECORD_TYPES, RECORD_TYPE_MAP, SLEEP_QUALITY } from '@/constants/recordTypes';
-import type { RecordType } from '@/types';
+import type { RecordItem, RecordType } from '@/types';
 import {
   useTodayRecords,
   useLastRecordMap,
@@ -18,7 +18,8 @@ import BabySwitcher from '@/components/BabySwitcher';
 import RecordButton from '@/components/RecordButton';
 import Timeline from '@/components/Timeline';
 import InputDialog from '@/components/InputDialog';
-import { formatDuration, startOfToday } from '@/utils/time';
+import { formatDuration, formatAge, startOfToday } from '@/utils/time';
+import { buildHandoverImage, shareOrSaveImage } from '@/utils/imageExporter';
 import styles from './index.module.scss';
 
 interface PendingInput {
@@ -34,6 +35,7 @@ const IndexPage: React.FC = () => {
   const currentBabyId = useStore((s) => s.currentBabyId);
   const records = useStore((s) => s.records);
   const dark = useStore((s) => s.dark);
+  const settings = useStore((s) => s.settings);
   const toggleDark = useStore((s) => s.toggleDark);
   const addRecord = useStore((s) => s.addRecord);
   const completeTiming = useStore((s) => s.completeTiming);
@@ -42,6 +44,8 @@ const IndexPage: React.FC = () => {
   const todayRecords = useTodayRecords();
   const lastMap = useLastRecordMap();
   const activeTiming = useActiveTiming();
+
+  const baby = babies.find((b) => b.id === currentBabyId);
 
   const [dialog, setDialog] = useState<{
     visible: boolean;
@@ -101,6 +105,15 @@ const IndexPage: React.FC = () => {
   useEffect(() => {
     setAlertDismissed(false);
   }, [healthAlert]);
+
+  // 尿不湿库存提醒（设置过库存且低于阈值时提示）
+  const diaperAlert = useMemo(() => {
+    const { diaperStock, diaperStockThreshold } = settings;
+    if (diaperStock > 0 && diaperStock <= diaperStockThreshold) {
+      return `尿不湿仅剩 ${diaperStock} 片，记得补货哦`;
+    }
+    return null;
+  }, [settings]);
 
   // 页面显示时刷新（从其他 tab 切回）
   useDidShow(() => {
@@ -304,6 +317,73 @@ const IndexPage: React.FC = () => {
     Taro.showToast({ title: '已删除', icon: 'none' });
   };
 
+  /** 单条记录 → 摘要文本 */
+  const recordToText = (r: RecordItem): string => {
+    const cfg = RECORD_TYPE_MAP[r.type];
+    const label = r.type === 'custom' ? r.customName || '自定义' : cfg.label;
+    const parts: string[] = [];
+    if (r.type === 'breast' && r.side) parts.push(r.side === 'left' ? '左侧' : '右侧');
+    if (r.value != null) parts.push(`${r.value}${r.unit || ''}`);
+    if (r.endTime) parts.push(formatDuration(r.endTime - r.startTime));
+    if (r.note) parts.push(r.note);
+    return parts.length ? `${label} ${parts.join(' · ')}` : label;
+  };
+
+  /** 生成交接班摘要图并分享/保存 */
+  const handleHandover = async () => {
+    if (!baby) return;
+    const todays = records
+      .filter((r) => r.babyId === baby.id && r.startTime >= startOfToday())
+      .sort((a, b) => a.startTime - b.startTime);
+    const count = (t: RecordType) => todays.filter((r) => r.type === t).length;
+    const sumDuration = (t: RecordType) =>
+      todays
+        .filter((r) => r.type === t && r.endTime)
+        .reduce((s, r) => s + ((r.endTime as number) - r.startTime), 0);
+    const milk = todays
+      .filter((r) => r.type === 'bottle')
+      .reduce((s, r) => s + (r.value ?? 0), 0);
+    const breastMs = sumDuration('breast');
+    const sleepMs = sumDuration('sleep');
+    const temps = todays.filter((r) => r.type === 'temperature' && r.value != null);
+
+    const summaryLines: { label: string; value: string; accent?: boolean }[] = [
+      { label: '母乳亲喂', value: `${count('breast')} 次${breastMs ? ` · ${formatDuration(breastMs)}` : ''}` },
+      { label: '奶瓶喂养', value: milk ? `${milk}ml` : `${count('bottle')} 次` },
+      { label: '小便 / 大便', value: `${count('pee')} 次 / ${count('poop')} 次` },
+      { label: '睡眠', value: sleepMs ? formatDuration(sleepMs) : '无记录' }
+    ];
+    if (temps.length) {
+      summaryLines.push({
+        label: '体温',
+        value: `${Math.max(...temps.map((r) => r.value as number))}°C（最高）`,
+        accent: true
+      });
+    }
+    if (settings.diaperStock > 0) {
+      summaryLines.push({ label: '尿不湿库存', value: `约 ${settings.diaperStock} 片` });
+    }
+
+    try {
+      Taro.showLoading({ title: '生成中…' });
+      const filePath = await buildHandoverImage({
+        babyName: baby.name,
+        ageText: `月龄 ${formatAge(baby.birthDate)}`,
+        dateText: dayjs().format('YYYY年M月D日'),
+        summaryLines,
+        timeline: todays.map((r) => ({
+          time: dayjs(r.startTime).format('HH:mm'),
+          text: recordToText(r)
+        }))
+      });
+      Taro.hideLoading();
+      await shareOrSaveImage(filePath);
+    } catch {
+      Taro.hideLoading();
+      Taro.showToast({ title: '生成失败，请重试', icon: 'none' });
+    }
+  };
+
   // 计时中展示用的时长
   const timingDurationText = useMemo(() => {
     if (!activeTiming) return '';
@@ -333,6 +413,13 @@ const IndexPage: React.FC = () => {
           >
             ✕
           </Text>
+        </View>
+      )}
+
+      {diaperAlert && (
+        <View className={styles.alertBanner}>
+          <Text className={styles.alertIcon}>🧷</Text>
+          <Text className={styles.alertText}>{diaperAlert}</Text>
         </View>
       )}
 
@@ -384,6 +471,9 @@ const IndexPage: React.FC = () => {
       <View className={styles.sectionTitle}>
         <Text className={styles.sectionTitleText}>今日记录</Text>
         <Text className={styles.countBadge}>{todayRecords.length}</Text>
+        <Text className={styles.handoverBtn} onClick={handleHandover}>
+          🤝 交接班
+        </Text>
       </View>
       <Timeline records={todayRecords} onDelete={handleDelete} />
 

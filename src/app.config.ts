@@ -3,7 +3,8 @@ export default defineAppConfig({
     'pages/index/index',
     'pages/stats/index',
     'pages/profile/index',
-    'pages/growth/index'
+    'pages/growth/index',
+    'pages/vaccine/index'
   ],
   window: {
     backgroundTextStyle: 'dark',

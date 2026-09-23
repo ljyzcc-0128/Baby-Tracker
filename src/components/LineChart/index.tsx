@@ -23,6 +23,12 @@ interface LineChartProps {
   unit?: string;
   /** y 值小数位 */
   decimals?: number;
+  /** x 轴含义标注（默认「月龄」） */
+  xLabel?: string;
+  /** x 轴刻度文案（传入时替换数字刻度） */
+  xTickFormatter?: (x: number) => string;
+  /** 竖线标记位置（如用药时间点） */
+  marks?: number[];
   dark?: boolean;
 }
 
@@ -32,6 +38,9 @@ const LineChart: React.FC<LineChartProps> = ({
   color = '#ff8c5a',
   unit = '',
   decimals = 1,
+  xLabel = '月龄',
+  xTickFormatter,
+  marks,
   dark
 }) => {
   const query = Taro.createSelectorQuery();
@@ -46,7 +55,7 @@ const LineChart: React.FC<LineChartProps> = ({
         draw(info.node, info.width, info.height);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [points, refLine, dark, color, unit, decimals]);
+  }, [points, refLine, dark, color, unit, decimals, xLabel, xTickFormatter, marks]);
 
   const draw = (
     canvas: any,
@@ -102,16 +111,31 @@ const LineChart: React.FC<LineChartProps> = ({
       ctx.fillText(y.toFixed(decimals), pad.l - 6, cy);
     }
 
-    // x 轴标签（月龄）
+    // x 轴标签
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     const xStep = xMax <= 4 ? 1 : xMax <= 8 ? 2 : xMax <= 18 ? 3 : xMax <= 30 ? 6 : 12;
     for (let x = 0; x <= xMax; x += xStep) {
       ctx.fillStyle = axisColor;
-      ctx.fillText(String(x), px(x), height - pad.b + 6);
+      ctx.fillText(xTickFormatter ? xTickFormatter(x) : String(x), px(x), height - pad.b + 6);
     }
     ctx.fillStyle = axisColor;
-    ctx.fillText('月龄', width - pad.r, height - pad.b + 6);
+    ctx.fillText(xLabel, width - pad.r, height - pad.b + 6);
+
+    // 竖线标记（如用药时间点）
+    if (marks && marks.length) {
+      ctx.strokeStyle = '#f53f3f';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 3]);
+      marks.forEach((mx) => {
+        if (mx < 0 || mx > xMax) return;
+        ctx.beginPath();
+        ctx.moveTo(px(mx), pad.t);
+        ctx.lineTo(px(mx), height - pad.b);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+    }
 
     // WHO 参考虚线
     if (refLine && refLine.length > 1) {

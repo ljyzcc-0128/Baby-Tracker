@@ -86,6 +86,18 @@ export interface Baby {
   birthDate: string;
   /** 头像背景色 */
   avatarColor: string;
+  /** 头像图片（本地持久化文件路径），为空时用首字母+背景色 */
+  avatar?: string;
   /** 创建时间戳（ms） */
   createdAt: number;
+}
+
+/** 应用设置 */
+export interface AppSettings {
+  /** 尿不湿当前库存（片） */
+  diaperStock: number;
+  /** 尿不湿补货提醒阈值（片） */
+  diaperStockThreshold: number;
+  /** 亲喂折算系数：1 分钟母乳 ≈ 多少 ml（用于统计总奶量） */
+  milkCoef: number;
 }

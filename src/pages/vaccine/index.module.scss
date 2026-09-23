@@ -1,0 +1,204 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: linear-gradient(180deg, var(--bt-grad, #fff1ea) 0%, var(--bt-bg, $color-bg-page) 240rpx);
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.header {
+  padding-top: $spacing-md;
+}
+
+.ageText {
+  display: block;
+  margin-top: $spacing-sm;
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.card {
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.cardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+// ===== 汇总 =====
+.summaryRow {
+  display: flex;
+  margin-bottom: $spacing-sm;
+}
+
+.summaryItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summaryNum {
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.2;
+}
+
+.summaryTotal {
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.summaryAlert {
+  color: $color-warning;
+}
+
+.summaryLabel {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+// ===== 下一针 =====
+.nextCard {
+  background: var(--bt-hover, $color-bg-page);
+  border-left: 8rpx solid $color-primary;
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-md;
+}
+
+.nextCardAlert {
+  border-left-color: $color-warning;
+}
+
+.nextLabel {
+  display: block;
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-bottom: 4rpx;
+}
+
+.nextName {
+  display: block;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.nextTime {
+  display: block;
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-top: 4rpx;
+}
+
+// ===== 分组列表 =====
+.group {
+  margin-bottom: $spacing-md;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.groupTitle {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--bt-t3, $color-text-tertiary);
+  padding: $spacing-xs 0;
+}
+
+.doseRow {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-bottom: 2rpx solid var(--bt-border, $color-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    opacity: 0.75;
+  }
+}
+
+.doseDone {
+  .doseName {
+    text-decoration: line-through;
+  }
+}
+
+.check {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 3rpx solid var(--bt-border, $color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.checkDone {
+  background: $color-success;
+  border-color: $color-success;
+}
+
+.doseInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.doseName {
+  display: block;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.doseDue {
+  display: block;
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+.statusText {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.statusDone {
+  color: $color-success;
+}
+
+.statusOverdue {
+  color: $color-warning;
+  font-weight: $font-weight-medium;
+}
+
+.footerNote {
+  display: block;
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: $spacing-md;
+  line-height: 1.6;
+}

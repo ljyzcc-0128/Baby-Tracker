@@ -2,7 +2,7 @@
 // 全局状态管理（Zustand）+ 本地存储持久化
 // ============================================
 import { create } from 'zustand';
-import type { Baby, GrowthRecord, RecordItem, RecordType } from '@/types';
+import type { AppSettings, Baby, GrowthRecord, RecordItem, RecordType } from '@/types';
 import { AVATAR_COLORS } from '@/constants/recordTypes';
 import {
   STORAGE_KEYS,
@@ -21,6 +21,10 @@ interface StoreState {
   dark: boolean;
   /** 生长测量记录（全量，按 babyId 过滤使用） */
   growthRecords: GrowthRecord[];
+  /** 疫苗接种状态：babyId -> 已接种的剂次 id 列表 */
+  vaccineDone: Record<string, string[]>;
+  /** 应用设置（尿布库存、奶量换算系数等） */
+  settings: AppSettings;
 
   // ===== baby actions =====
   addBaby: (data: Omit<Baby, 'id' | 'avatarColor' | 'createdAt'>) => void;
@@ -58,6 +62,12 @@ interface StoreState {
   }) => void;
   deleteGrowth: (id: string) => void;
 
+  // ===== vaccine actions =====
+  toggleVaccine: (babyId: string, doseId: string) => void;
+
+  // ===== settings =====
+  updateSettings: (patch: Partial<AppSettings>) => void;
+
   // ===== init =====
   hydrate: () => void;
 }
@@ -88,12 +98,21 @@ function ensureDefaultBaby(): Baby {
   return defaultBaby;
 }
 
+/** 默认设置 */
+export const DEFAULT_SETTINGS: AppSettings = {
+  diaperStock: 0,
+  diaperStockThreshold: 5,
+  milkCoef: 10
+};
+
 export const useStore = create<StoreState>((set, get) => ({
   babies: [],
   currentBabyId: '',
   records: [],
   dark: false,
   growthRecords: [],
+  vaccineDone: {},
+  settings: { ...DEFAULT_SETTINGS },
 
   addBaby: (data) => {
     const baby: Baby = {
@@ -157,6 +176,14 @@ export const useStore = create<StoreState>((set, get) => ({
     const records = [record, ...get().records];
     persistRecords(records);
     set({ records });
+
+    // 换尿布自动扣减库存
+    if (type === 'diaper') {
+      const cur = get().settings;
+      if (cur.diaperStock > 0) {
+        get().updateSettings({ diaperStock: cur.diaperStock - 1 });
+      }
+    }
   },
 
   completeTiming: (recordId, endTime, patch) => {
@@ -204,6 +231,23 @@ export const useStore = create<StoreState>((set, get) => ({
     set({ growthRecords });
   },
 
+  toggleVaccine: (babyId, doseId) => {
+    const map = get().vaccineDone;
+    const list = map[babyId] ?? [];
+    const next = list.includes(doseId)
+      ? list.filter((d) => d !== doseId)
+      : [...list, doseId];
+    const vaccineDone = { ...map, [babyId]: next };
+    setStorage(STORAGE_KEYS.VACCINE, vaccineDone);
+    set({ vaccineDone });
+  },
+
+  updateSettings: (patch) => {
+    const settings = { ...get().settings, ...patch };
+    setStorage(STORAGE_KEYS.SETTINGS, settings);
+    set({ settings });
+  },
+
   hydrate: () => {
     const babies = getStorage<Baby[]>(STORAGE_KEYS.BABIES, []);
     let currentBabyId = getStorage<string>(STORAGE_KEYS.CURRENT_BABY_ID, '');
@@ -219,6 +263,8 @@ export const useStore = create<StoreState>((set, get) => ({
     const records = getStorage<RecordItem[]>(STORAGE_KEYS.RECORDS, []);
     const dark = getStorage<boolean>(STORAGE_KEYS.DARK, false);
     const growthRecords = getStorage<GrowthRecord[]>(STORAGE_KEYS.GROWTH, []);
-    set({ babies, currentBabyId, records, dark, growthRecords });
+    const vaccineDone = getStorage<Record<string, string[]>>(STORAGE_KEYS.VACCINE, {});
+    const settings = { ...DEFAULT_SETTINGS, ...getStorage<Partial<AppSettings>>(STORAGE_KEYS.SETTINGS, {}) };
+    set({ babies, currentBabyId, records, dark, growthRecords, vaccineDone, settings });
   }
 }));

@@ -191,6 +191,29 @@
   margin-top: 4rpx;
 }
 
+.numInput {
+  width: 140rpx;
+  height: 64rpx;
+  background: var(--bt-hover, $color-bg-page);
+  border-radius: $radius-md;
+  text-align: center;
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.inputUnit {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-left: 8rpx;
+  width: 60rpx;
+}
+
+.setGap {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 2rpx solid var(--bt-border, $color-border);
+}
+
 .empty {
   display: flex;
   flex-direction: column;

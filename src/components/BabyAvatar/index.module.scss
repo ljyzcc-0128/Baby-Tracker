@@ -1,0 +1,16 @@
+@use '@/styles/variables.scss' as *;
+
+.avatar {
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.initial {
+  color: $color-text-white;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
