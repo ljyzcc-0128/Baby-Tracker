@@ -1,0 +1,114 @@
+@use '@/styles/variables.scss' as *;
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: stretch;
+  padding-bottom: $spacing-md;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32rpx;
+  flex-shrink: 0;
+  padding-top: 8rpx;
+}
+
+.dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  flex-shrink: 0;
+}
+
+.line {
+  flex: 1;
+  width: 2rpx;
+  background: var(--bt-border, $color-border);
+  margin-top: 8rpx;
+}
+
+.content {
+  flex: 1;
+  margin-left: $spacing-sm;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.time {
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  font-weight: $font-weight-medium;
+}
+
+.duration {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  background: var(--bt-hover, $color-bg-hover);
+  padding: 2rpx 12rpx;
+  border-radius: $radius-xs;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.icon {
+  font-size: $font-size-lg;
+  margin-right: $spacing-xs;
+  line-height: 1;
+}
+
+.name {
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+  font-weight: $font-weight-medium;
+}
+
+.value {
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-left: $spacing-xs;
+  @include text-ellipsis;
+  max-width: 380rpx;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-sm;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}

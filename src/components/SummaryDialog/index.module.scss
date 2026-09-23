@@ -1,0 +1,71 @@
+@use '@/styles/variables.scss' as *;
+
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog {
+  width: 640rpx;
+  max-height: 80vh;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-md;
+}
+
+.body {
+  flex: 1;
+  max-height: 56vh;
+  background: var(--bt-hover, $color-bg-page);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.content {
+  font-size: $font-size-sm;
+  color: var(--bt-t1, $color-text-primary);
+  line-height: $line-height-loose;
+  white-space: pre-line;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.btn {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: $font-size-md;
+  border-radius: $radius-button;
+}
+
+.btnCancel {
+  background: var(--bt-hover, $color-bg-page);
+  color: var(--bt-t2, $color-text-secondary);
+}
+
+.btnConfirm {
+  background: $color-primary;
+  color: $color-text-white;
+}

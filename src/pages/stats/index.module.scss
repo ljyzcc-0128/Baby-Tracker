@@ -1,0 +1,182 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: linear-gradient(180deg, var(--bt-grad, #fff1ea) 0%, var(--bt-bg, $color-bg-page) 240rpx);
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.header {
+  padding-top: $spacing-md;
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: 4rpx;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.summary {
+  display: flex;
+  margin: $spacing-md 0;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md 0;
+}
+
+.summaryItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summaryValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.2;
+}
+
+.summaryLabel {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 6rpx;
+}
+
+.visitCard {
+  display: flex;
+  align-items: center;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.99);
+  }
+}
+
+.visitIcon {
+  font-size: 44rpx;
+  margin-right: $spacing-md;
+}
+
+.visitInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.visitTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.visitDesc {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+.visitArrow {
+  font-size: 40rpx;
+  color: var(--bt-t3, $color-text-tertiary);
+  line-height: 1;
+}
+
+.qualityRow {
+  display: flex;
+  margin-bottom: $spacing-sm;
+}
+
+.qualityItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qualityValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: var(--bt-t1, $color-text-primary);
+  line-height: 1.3;
+}
+
+.qualityLabel {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 6rpx;
+}
+
+.card {
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.cardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-sm;
+}
+
+.filterScroll {
+  @include scroll-x-container;
+  margin-bottom: $spacing-sm;
+}
+
+.filterItem {
+  @include scroll-x-item(auto);
+  display: inline-flex;
+  padding: 10rpx 28rpx;
+  margin-right: $spacing-sm;
+  border-radius: $radius-round;
+  background: var(--bt-hover, $color-bg-page);
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  white-space: nowrap;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.filterItemActive {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-sm;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: var(--bt-t2, $color-text-secondary);
+}

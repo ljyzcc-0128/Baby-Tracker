@@ -1,0 +1,124 @@
+@use '@/styles/variables.scss' as *;
+
+.wrap {
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.current {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  transition: background $transition-base;
+
+  &:active {
+    background: var(--bt-hover, $color-bg-hover);
+  }
+}
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-round;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+.avatarText {
+  font-size: $font-size-lg;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+}
+
+.info {
+  flex: 1;
+  margin-left: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  line-height: 1.3;
+}
+
+.age {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+.arrow {
+  font-size: 20rpx;
+  color: var(--bt-t3, $color-text-tertiary);
+  transition: transform $transition-base;
+}
+
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+.list {
+  max-height: 480rpx;
+  border-top: 2rpx solid var(--bt-border, $color-divider);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  transition: background $transition-base;
+
+  &:active {
+    background: var(--bt-hover, $color-bg-hover);
+  }
+}
+
+.itemActive {
+  background: var(--bt-hover, $color-bg-hover);
+}
+
+.avatarSmall {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+.avatarTextSmall {
+  font-size: $font-size-md;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+}
+
+.itemInfo {
+  flex: 1;
+  margin-left: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+  line-height: 1.3;
+}
+
+.itemAge {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+.check {
+  font-size: $font-size-md;
+  color: $color-primary;
+  font-weight: $font-weight-bold;
+}

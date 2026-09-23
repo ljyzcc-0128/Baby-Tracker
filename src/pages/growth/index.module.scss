@@ -1,0 +1,296 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: linear-gradient(180deg, var(--bt-grad, #fff1ea) 0%, var(--bt-bg, $color-bg-page) 240rpx);
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.header {
+  padding-top: $spacing-md;
+}
+
+.ageText {
+  display: block;
+  margin-top: $spacing-sm;
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.metricTabs {
+  display: flex;
+  margin: $spacing-md 0 $spacing-sm;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-round;
+  padding: 6rpx;
+  box-shadow: $shadow-card;
+}
+
+.metricTab {
+  flex: 1;
+  text-align: center;
+  padding: 12rpx 0;
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  transition: all $transition-base;
+}
+
+.metricTabActive {
+  background: $color-primary;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.card {
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.cardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.legend {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xs;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+}
+
+.legendLine {
+  width: 40rpx;
+  height: 4rpx;
+  border-radius: 2rpx;
+  background: $color-primary;
+  margin-right: 8rpx;
+}
+
+.legendRef {
+  background: repeating-linear-gradient(
+    90deg,
+    #c0c4cc 0,
+    #c0c4cc 8rpx,
+    transparent 8rpx,
+    transparent 14rpx
+  );
+}
+
+.legendText {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.emptyIcon {
+  font-size: 72rpx;
+  margin-bottom: $spacing-sm;
+  opacity: 0.6;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.latestRow {
+  display: flex;
+}
+
+.latestItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.latestLabel {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-bottom: 6rpx;
+}
+
+.latestValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.latestDiff {
+  font-size: $font-size-xs;
+  margin-top: 6rpx;
+}
+
+.diffUp {
+  color: $color-primary;
+}
+
+.diffDown {
+  color: $color-info;
+}
+
+.addBtn {
+  margin-top: $spacing-md;
+  background: $color-primary;
+  color: $color-text-white;
+  font-size: $font-size-md;
+  border-radius: $radius-button;
+  height: 80rpx;
+  line-height: 80rpx;
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.recordRow {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-bottom: 2rpx solid var(--bt-border, $color-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.recordInfo {
+  flex: 1;
+}
+
+.recordDate {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: var(--bt-t1, $color-text-primary);
+  display: block;
+}
+
+.recordValues {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+  display: block;
+}
+
+.deleteBtn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-md;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+// ===== 弹窗 =====
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog {
+  width: 620rpx;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+}
+
+.dialogTitle {
+  display: block;
+  text-align: center;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-lg;
+}
+
+.field {
+  margin-bottom: $spacing-md;
+}
+
+.fieldLabel {
+  font-size: $font-size-sm;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.pickerValue {
+  background: var(--bt-hover, $color-bg-page);
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.input {
+  background: var(--bt-hover, $color-bg-page);
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-md;
+  height: 80rpx;
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.placeholder {
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+}
+
+.btn {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: $font-size-md;
+  border-radius: $radius-button;
+}
+
+.btnCancel {
+  background: var(--bt-hover, $color-bg-page);
+  color: var(--bt-t2, $color-text-secondary);
+}
+
+.btnConfirm {
+  background: $color-primary;
+  color: $color-text-white;
+}

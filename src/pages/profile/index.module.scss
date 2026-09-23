@@ -1,0 +1,240 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: linear-gradient(180deg, var(--bt-grad, #fff1ea) 0%, var(--bt-bg, $color-bg-page) 240rpx);
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.header {
+  padding-top: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.appTitle {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.appDesc {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.addBtn {
+  @include button-reset;
+  height: 56rpx;
+  padding: 0 28rpx;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  min-width: 140rpx;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.babyCard {
+  display: flex;
+  align-items: center;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-bottom: $spacing-sm;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.92;
+    transform: scale(0.99);
+  }
+}
+
+.babyCardCurrent {
+  box-shadow: 0 0 0 4rpx rgba(255, 140, 90, 0.25), $shadow-card;
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-round;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+.avatarText {
+  font-size: $font-size-xl;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+}
+
+.babyInfo {
+  flex: 1;
+  margin-left: $spacing-md;
+  display: flex;
+  flex-direction: column;
+}
+
+.babyName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+
+.currentTag {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+  background: $color-primary;
+  padding: 2rpx 16rpx;
+  border-radius: $radius-round;
+  margin-left: $spacing-xs;
+}
+
+.babyMeta {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 6rpx;
+}
+
+.actionCol {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.iconBtn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  background: var(--bt-hover, $color-bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-lg;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.settingsCard {
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.entryRow {
+  padding-bottom: $spacing-md;
+  margin-bottom: $spacing-md;
+  border-bottom: 2rpx solid var(--bt-border, $color-border);
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.entryArrow {
+  font-size: 40rpx;
+  color: var(--bt-t3, $color-text-tertiary);
+  line-height: 1;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+}
+
+.settingIcon {
+  font-size: 40rpx;
+  margin-right: $spacing-md;
+}
+
+.settingInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.settingLabel {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.settingDesc {
+  font-size: $font-size-xs;
+  color: var(--bt-t3, $color-text-tertiary);
+  margin-top: 4rpx;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-sm;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-bottom: $spacing-sm;
+}
+
+.tip {
+  margin-top: $spacing-lg;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.tipTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.tipItem {
+  font-size: $font-size-sm;
+  color: var(--bt-t3, $color-text-tertiary);
+  line-height: $line-height-loose;
+  display: flex;
+  align-items: flex-start;
+}
+
+.tipDot {
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}

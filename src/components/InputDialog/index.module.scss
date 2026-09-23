@@ -1,0 +1,92 @@
+@use '@/styles/variables.scss' as *;
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog {
+  width: 600rpx;
+  background: var(--bt-card, $color-bg-card);
+  border-radius: $radius-xl;
+  padding: $spacing-lg $spacing-lg $spacing-md;
+  box-shadow: $shadow-popup;
+}
+
+.title {
+  display: block;
+  text-align: center;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: var(--bt-t1, $color-text-primary);
+  margin-bottom: $spacing-lg;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  background: var(--bt-hover, $color-bg-page);
+  border-radius: $radius-md;
+  padding: 0 $spacing-md;
+  height: 88rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.input {
+  flex: 1;
+  height: 88rpx;
+  font-size: $font-size-md;
+  color: var(--bt-t1, $color-text-primary);
+}
+
+.placeholder {
+  color: var(--bt-t3, $color-text-tertiary);
+}
+
+.unit {
+  font-size: $font-size-md;
+  color: var(--bt-t2, $color-text-secondary);
+  margin-left: $spacing-xs;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.btn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+}
+
+.btnCancel {
+  background: var(--bt-hover, $color-bg-page);
+  color: var(--bt-t2, $color-text-secondary);
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.btnConfirm {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
